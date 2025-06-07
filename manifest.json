@@ -1,0 +1,25 @@
+{
+    "required_api_version": "2",
+    "name": "text_search",
+    "description": "Search text in files inside a",
+    "developer_name": "Mario Berlanga",
+    "icon": "images/main_icon.png",
+    "options": {
+      "query_debounce": 1.5
+    },
+    "preferences": [
+      {
+        "id": "kw",
+        "type": "keyword",
+        "name": "Text search Keyword",
+        "default_value": "grep"
+      },
+      {
+        "id": "default_path",
+        "type": "input",
+        "name": "Default path",
+        "description": "Write the default path from where it should start the search.",
+        "default_value": "/home"
+      }
+    ]
+  }
