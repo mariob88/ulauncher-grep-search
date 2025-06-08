@@ -1,7 +1,7 @@
 {
     "required_api_version": "2",
-    "name": "text_search",
-    "description": "Search text in files inside a",
+    "name": "Text search with grep",
+    "description": "Search text in files inside a directory",
     "developer_name": "Mario Berlanga",
     "icon": "images/main_icon.png",
     "options": {
@@ -20,6 +20,13 @@
         "name": "Default path",
         "description": "Write the default path from where it should start the search.",
         "default_value": "/home"
+      },
+      {
+        "id": "default_timeout",
+        "type": "input",
+        "name": "Default timeout for the grep command",
+        "description": "Put a default duration for the grep search to avoid long waits.",
+        "default_value": 5
       }
     ]
   }

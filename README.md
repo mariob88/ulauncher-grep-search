@@ -19,6 +19,9 @@ You can specify another folder writing its absolute path after the search string
 ```
 grep Hello_world /home/user/scripts
 ```
+```
+grep "Hello world!" /home/user/scripts
+```
 
 It will print a list of the first ten results obtained with its name and the matching line. If you click enter with one of them highlighted, it will open the file.
 

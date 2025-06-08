@@ -18,6 +18,7 @@ class KeywordQueryEventListener(EventListener):
     def on_event(self, event, extension):
         query = event.get_argument() or ""
         items = []
+        timeout = extension.preferences['default_timeout']
 
         if not query:
             return extension.menu()
@@ -35,7 +36,7 @@ class KeywordQueryEventListener(EventListener):
             path = extension.preferences['default_path'] if not query_list  else query_list.pop(0)
 
         grep_cmd = [
-            'timeout', '20s', 'grep', '-r', '-I', search_string, path
+            'timeout', timeout, 'grep', '-r', '-I', search_string, path
             ]
 
         logger.info(grep_cmd)
