@@ -1,5 +1,6 @@
 import logging as log
 import subprocess
+import re
 from ulauncher.api.client.EventListener import EventListener
 from ulauncher.api.shared.action.OpenAction import OpenAction
 from ulauncher.api.shared.action.HideWindowAction import HideWindowAction
@@ -21,13 +22,23 @@ class KeywordQueryEventListener(EventListener):
         if not query:
             return extension.menu()
         
-        query_list = query.split(maxsplit=1)
-        search_string = query_list.pop(0)
-        path = extension.preferences['default_path'] if not query_list  else query_list.pop(0)
+        if "\"" in query or "\'" in query:
+            pattern = r"(\'|\")(.*)(\'|\")"
+            search_string = re.search(pattern, query).group(2)
+            logger.info(search_string)
+            query_path = query.rsplit(maxsplit=1)[-1]
+            path = extension.preferences['default_path'] if not query_path else query_path
+
+        else:
+            query_list = query.split(maxsplit=1)
+            search_string = query_list.pop(0)
+            path = extension.preferences['default_path'] if not query_list  else query_list.pop(0)
 
         grep_cmd = [
-            'timeout', '5s', 'grep', '-r', '-I', search_string, path
+            'timeout', '20s', 'grep', '-r', '-I', search_string, path
             ]
+
+        logger.info(grep_cmd)
 
         cut_cmd = ['cut', '-c1-500']
 
@@ -65,8 +76,6 @@ class KeywordQueryEventListener(EventListener):
             return RenderResultListAction(items)
 
         for r in result[:10]:
-            logger.info(r)
-            logger.info(r.decode('UTF-8'))
             file, match = r.decode('UTF-8').split(':', maxsplit=1)
             items.append(
                 ExtensionResultItem(name = file,
